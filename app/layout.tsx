@@ -1,34 +1,37 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Playfair_Display, DM_Sans } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import FadeUpObserver from '@/components/FadeUpObserver'
 
-const inter = Inter({ 
+const playfair = Playfair_Display({
   subsets: ['latin'],
-  variable: '--font-inter',
+  weight: ['700', '900'],
+  variable: '--font-playfair',
+})
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600'],
+  variable: '--font-dm-sans',
 })
 
 export const metadata: Metadata = {
   title: {
-    default: 'PHALGA - Philippine Association of Local Government Accountants',
-    template: '%s | PHALGA',
+    default: 'PhALGA (Philippine Association of Local Government Accountants), Inc.',
+    template: '%s | PhALGA',
   },
-  description: 'The Philippine Association of Local Government Accountants (PHALGA) - Supporting and empowering local government accountants across the Philippines.',
-  keywords: ['Philippines', 'Local Government', 'Accountants', 'PHALGA', 'Government Accounting', 'LGU'],
-  authors: [{ name: 'PHALGA' }],
+  description: 'PhALGA (Philippine Association of Local Government Accountants), Inc. — empowering LGU accounting professionals across the archipelago through education, fellowship, and advocacy.',
+  keywords: ['Philippines', 'Local Government', 'Accountants', 'PhALGA', 'Government Accounting', 'LGU'],
+  authors: [{ name: 'PhALGA' }],
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://phalga.org',
-    siteName: 'PHALGA',
-    title: 'PHALGA - Philippine Association of Local Government Accountants',
-    description: 'The Philippine Association of Local Government Accountants (PHALGA) - Supporting and empowering local government accountants across the Philippines.',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'PHALGA - Philippine Association of Local Government Accountants',
-    description: 'The Philippine Association of Local Government Accountants (PHALGA) - Supporting and empowering local government accountants across the Philippines.',
+    siteName: 'PhALGA',
+    title: 'PhALGA (Philippine Association of Local Government Accountants), Inc.',
+    description: 'The Philippine Association of Local Government Accountants — empowering LGU accounting professionals across the archipelago.',
   },
   robots: {
     index: true,
@@ -42,10 +45,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="antialiased">
+    <html lang="en" className={`${playfair.variable} ${dmSans.variable}`}>
+      <body className="antialiased font-sans">
         <Navbar />
-        <main className="min-h-screen">{children}</main>
+        <FadeUpObserver />
+        <main>{children}</main>
         <Footer />
       </body>
     </html>

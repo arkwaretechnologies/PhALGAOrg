@@ -4,9 +4,16 @@
 
 @layer base {
   :root {
-    --color-philippine-blue: #0038A8;
-    --color-philippine-red: #CE1126;
-    --color-philippine-yellow: #FCD116;
+    --blue: #0038A8;
+    --blue-dark: #002070;
+    --blue-light: #1a4fc4;
+    --red: #CE1126;
+    --gold: #FCD116;
+    --white: #FAFBFF;
+    --off-white: #F0F3FA;
+    --text: #0d1b3e;
+    --text-muted: #5a6a8a;
+    --border: rgba(0,56,168,0.12);
   }
 
   html {
@@ -14,25 +21,64 @@
   }
 
   body {
-    @apply bg-white text-gray-900;
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
   }
 }
 
 @layer components {
-  .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20;
+  .container-ph {
+    @apply max-w-[1200px] mx-auto px-6 lg:px-10;
+  }
+
+  .section-label {
+    @apply flex items-center gap-2.5 mb-4;
+  }
+  .section-label::before {
+    content: '';
+    @apply block w-[30px] h-0.5 bg-ph-gold rounded;
+  }
+  .section-label span {
+    @apply text-xs font-semibold text-ph-blue uppercase tracking-[0.15em];
   }
 
   .section-title {
-    @apply text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4;
+    @apply font-display text-3xl lg:text-[2.8rem] font-bold text-ph-text leading-tight mb-4;
+  }
+  .section-title .accent {
+    @apply text-ph-blue;
   }
 
-  .section-subtitle {
-    @apply text-lg sm:text-xl text-gray-600 mb-8 max-w-3xl;
+  .section-sub {
+    @apply text-[17px] text-ph-text-muted max-w-[560px] leading-relaxed;
   }
 
-  .writing-vertical-rl {
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-ph-gold text-ph-blue-dark font-bold text-[15px] py-4 px-8 rounded-[10px] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(252,209,22,0.4)];
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 bg-transparent text-white/85 font-medium text-[15px] py-4 px-7 rounded-[10px] border-[1.5px] border-white/30 transition-all hover:border-ph-gold hover:text-ph-gold;
+  }
+
+  .btn-white {
+    @apply inline-flex items-center gap-2 bg-white text-ph-blue font-bold text-[15px] py-4 px-8 rounded-[10px] transition-all hover:-translate-y-0.5;
+  }
+
+  .fade-up {
+    @apply opacity-0 translate-y-8 transition-all duration-700 ease-out;
+  }
+  .fade-up.visible {
+    @apply opacity-100 translate-y-0;
+  }
+
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
