@@ -1,6 +1,7 @@
 import Section from '@/components/Section'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
+import SubpageLayout from '@/components/SubpageLayout'
 
 export const metadata = {
   title: 'Events',
@@ -30,41 +31,35 @@ export default function EventsPage() {
   ]
 
   return (
-    <>
-      {/* Hero Section */}
-      <Section className="bg-gradient-to-br from-philippine-blue to-blue-900 text-white pt-24 pb-16">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-            Events
-          </h1>
-          <p className="text-xl text-blue-100">
-            Join us for conferences, training, and networking opportunities.
-          </p>
-        </div>
-      </Section>
-
-      {/* Events Sections */}
-      <Section className="bg-white">
-        <div className="max-w-6xl mx-auto space-y-16">
+    <SubpageLayout
+      title="Events"
+      subtitle="Join us for conferences, training, and networking opportunities."
+      eyebrow="Philippine Association of Local Government Accountants"
+    >
+      {/* Events Sections — about-page style, centered */}
+      <Section className="bg-white py-20 px-6 sm:px-8">
+        <div className="max-w-[1100px] mx-auto space-y-20">
           {eventTypes.map((eventType, typeIndex) => (
-            <div key={typeIndex}>
-              <div className="text-center mb-8">
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-                  {eventType.title}
-                </h2>
-                <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  {eventType.description}
-                </p>
+            <div key={typeIndex} className="flex flex-col items-center text-center">
+              <div className="section-label justify-center mb-2">
+                <span>Conferences &amp; Events</span>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <h2 className="section-title text-center mb-4">
+                {eventType.title}
+              </h2>
+              <p className="section-sub mx-auto text-center mb-10">
+                {eventType.description}
+              </p>
+              <div className="flex flex-wrap justify-center gap-6 w-full">
                 {eventType.events.map((event, index) => (
-                  <Card
-                    key={index}
-                    title={event.title}
-                    description={`Location: ${event.location}`}
-                    date={event.date}
-                    href={`/downloads?event=${encodeURIComponent(event.title)}`}
-                  />
+                  <div key={index} className="w-full min-w-[280px] max-w-[400px]">
+                    <Card
+                      title={event.title}
+                      description={`Location: ${event.location}`}
+                      date={event.date}
+                      href={`/downloads?event=${encodeURIComponent(event.title)}`}
+                    />
+                  </div>
                 ))}
               </div>
             </div>
@@ -72,18 +67,23 @@ export default function EventsPage() {
         </div>
       </Section>
 
-      {/* Photo Gallery Section */}
-      <Section className="bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="section-title text-center">Photo Gallery</h2>
-          <p className="section-subtitle text-center">
+      {/* Photo Gallery — about-page style, centered */}
+      <Section className="bg-[#F0F3FA] py-20 px-6 sm:px-8">
+        <div className="max-w-[1100px] mx-auto text-center">
+          <div className="section-label justify-center mb-2">
+            <span>Gallery</span>
+          </div>
+          <h2 className="section-title text-center mb-2">
+            Photo <span className="accent">Gallery</span>
+          </h2>
+          <p className="section-sub mx-auto mb-10">
             View photos from our recent events and conferences.
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+          <div className="flex flex-wrap justify-center gap-4">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
               <div
                 key={item}
-                className="aspect-square bg-gradient-to-br from-philippine-blue to-blue-900 rounded-lg flex items-center justify-center text-white font-semibold"
+                className="aspect-square w-[160px] sm:w-[180px] bg-gradient-to-br from-ph-blue to-ph-blue-dark rounded-xl flex items-center justify-center text-white font-semibold shadow-lg"
               >
                 Photo {item}
               </div>
@@ -92,13 +92,16 @@ export default function EventsPage() {
         </div>
       </Section>
 
-      {/* CTA Section */}
-      <Section className="bg-white">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">
-            Stay Updated
+      {/* CTA — about-page style, centered */}
+      <Section className="bg-white py-20 px-6 sm:px-8">
+        <div className="max-w-[1100px] mx-auto text-center">
+          <div className="section-label justify-center mb-2">
+            <span>Stay in Touch</span>
+          </div>
+          <h2 className="section-title text-center mb-4">
+            Stay <span className="accent">Updated</span>
           </h2>
-          <p className="text-lg text-gray-600 mb-8">
+          <p className="section-sub mx-auto mb-8">
             Check back regularly for upcoming events and conference announcements.
           </p>
           <Button href="/contact" variant="primary" size="large">
@@ -106,6 +109,6 @@ export default function EventsPage() {
           </Button>
         </div>
       </Section>
-    </>
+    </SubpageLayout>
   )
 }

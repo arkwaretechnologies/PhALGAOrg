@@ -1,5 +1,6 @@
 import Section from '@/components/Section'
 import Card from '@/components/Card'
+import SubpageLayout from '@/components/SubpageLayout'
 
 export const metadata = {
   title: 'Circulars',
@@ -37,19 +38,11 @@ export default function CircularsPage() {
   ]
 
   return (
-    <>
-      {/* Hero Section */}
-      <Section className="bg-gradient-to-br from-philippine-blue to-blue-900 text-white pt-24 pb-16">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-            Circulars
-          </h1>
-          <p className="text-xl text-blue-100">
-            Stay updated with the latest circulars and official communications.
-          </p>
-        </div>
-      </Section>
-
+    <SubpageLayout
+      title="Circulars"
+      subtitle="Stay updated with the latest circulars and official communications."
+      eyebrow="Philippine Association of Local Government Accountants"
+    >
       {/* Circulars Sections */}
       <Section className="bg-white">
         <div className="max-w-6xl mx-auto space-y-12">
@@ -84,6 +77,6 @@ export default function CircularsPage() {
           </p>
         </div>
       </Section>
-    </>
+    </SubpageLayout>
   )
 }

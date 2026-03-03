@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Section from '@/components/Section'
 import Button from '@/components/Button'
+import SubpageLayout from '@/components/SubpageLayout'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -41,19 +42,11 @@ export default function ContactPage() {
   }
 
   return (
-    <>
-      {/* Hero Section */}
-      <Section className="bg-gradient-to-br from-philippine-blue to-blue-900 text-white pt-24 pb-16">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-            Get in Touch
-          </h1>
-          <p className="text-xl text-blue-100">
-            We'd love to hear from you. Reach out to learn more about our programs or get involved.
-          </p>
-        </div>
-      </Section>
-
+    <SubpageLayout
+      title="Get in Touch"
+      subtitle="We'd love to hear from you. Reach out to learn more about our programs or get involved."
+      eyebrow="Philippine Association of Local Government Accountants"
+    >
       {/* Contact Section */}
       <Section className="bg-white">
         <div className="max-w-6xl mx-auto">
@@ -239,6 +232,6 @@ export default function ContactPage() {
           </div>
         </div>
       </Section>
-    </>
+    </SubpageLayout>
   )
 }

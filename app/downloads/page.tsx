@@ -1,5 +1,6 @@
 import Section from '@/components/Section'
 import Card from '@/components/Card'
+import SubpageLayout from '@/components/SubpageLayout'
 
 export const metadata = {
   title: 'Downloads',
@@ -66,19 +67,11 @@ export default function DownloadsPage() {
   ]
 
   return (
-    <>
-      {/* Hero Section */}
-      <Section className="bg-gradient-to-br from-philippine-blue to-blue-900 text-white pt-24 pb-16">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-            Downloads
-          </h1>
-          <p className="text-xl text-blue-100">
-            Access conference lectures, presentations, and other resources.
-          </p>
-        </div>
-      </Section>
-
+    <SubpageLayout
+      title="Downloads"
+      subtitle="Access conference lectures, presentations, and other resources."
+      eyebrow="Philippine Association of Local Government Accountants"
+    >
       {/* Downloads Sections */}
       <Section className="bg-white">
         <div className="max-w-6xl mx-auto space-y-12">
@@ -129,6 +122,6 @@ export default function DownloadsPage() {
           </p>
         </div>
       </Section>
-    </>
+    </SubpageLayout>
   )
 }

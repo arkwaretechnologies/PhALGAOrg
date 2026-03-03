@@ -1,5 +1,6 @@
 import Section from '@/components/Section'
 import Card from '@/components/Card'
+import SubpageLayout from '@/components/SubpageLayout'
 
 export const metadata = {
   title: 'PhALGA Archives',
@@ -85,6 +86,6 @@ export default function ArchivesPage() {
           </p>
         </div>
       </Section>
-    </>
+    </SubpageLayout>
   )
 }
