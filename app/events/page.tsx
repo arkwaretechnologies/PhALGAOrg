@@ -36,8 +36,10 @@ export default function EventsPage() {
       subtitle="Join us for conferences, training, and networking opportunities."
       eyebrow="Philippine Association of Local Government Accountants"
     >
-      {/* Events Sections — about-page style, centered */}
-      <Section className="bg-white py-20 px-6 sm:px-8">
+      <div className="subpage-center-ref">
+        <div className="subpage-center-ref-inner w-full">
+          {/* Events Sections — centered like officers page */}
+          <Section className="bg-white py-20 px-6 sm:px-8 w-full">
         <div className="max-w-[1100px] mx-auto space-y-20">
           {eventTypes.map((eventType, typeIndex) => (
             <div key={typeIndex} className="flex flex-col items-center text-center">
@@ -67,8 +69,8 @@ export default function EventsPage() {
         </div>
       </Section>
 
-      {/* Photo Gallery — about-page style, centered */}
-      <Section className="bg-[#F0F3FA] py-20 px-6 sm:px-8">
+          {/* Photo Gallery */}
+          <Section className="bg-[#F0F3FA] py-20 px-6 sm:px-8 w-full">
         <div className="max-w-[1100px] mx-auto text-center">
           <div className="section-label justify-center mb-2">
             <span>Gallery</span>
@@ -92,8 +94,8 @@ export default function EventsPage() {
         </div>
       </Section>
 
-      {/* CTA — about-page style, centered */}
-      <Section className="bg-white py-20 px-6 sm:px-8">
+          {/* CTA */}
+          <Section className="bg-white py-20 px-6 sm:px-8 w-full">
         <div className="max-w-[1100px] mx-auto text-center">
           <div className="section-label justify-center mb-2">
             <span>Stay in Touch</span>
@@ -108,7 +110,9 @@ export default function EventsPage() {
             Contact Us for More Information
           </Button>
         </div>
-      </Section>
+          </Section>
+        </div>
+      </div>
     </SubpageLayout>
   )
 }

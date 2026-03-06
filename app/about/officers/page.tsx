@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import SubpageLayout from '@/components/SubpageLayout'
 import { getOfficersFromPublicFolder, type OfficerFromFile } from '@/lib/officers'
+import './OrgChart.css'
 
 export const metadata = {
   title: 'PhALGA Officers',
@@ -8,32 +9,46 @@ export const metadata = {
     'Meet the National Officers, Council of Advisers, and Past Presidents of the Philippine Association of Local Government Accountants.',
 }
 
-// Layout: 01,02 one per row; 03-06 same row (4 cols); 07-10 one per row; 11-13 same row (3); rest 4 per row
-function OfficerCard({ o }: { o: OfficerFromFile }) {
+type TierKind = 'president' | 'vp' | 'executive' | 'board'
+
+function OrgNode({
+  o,
+  tier,
+}: {
+  o: OfficerFromFile
+  tier: TierKind
+}) {
+  const nodeClass =
+    tier === 'president'
+      ? 'org-node org-node--president'
+      : tier === 'vp'
+        ? 'org-node org-node--vp'
+        : 'org-node'
+
   return (
-    <div className="relative w-full aspect-[3/4] min-h-[280px] flex items-center justify-center">
-      <Image
-        src={`/Officers/${o.year}/${o.filename}`}
-        alt={`${o.name} - ${o.position}`}
-        width={500}
-        height={667}
-        className="w-full h-full object-contain object-top"
-        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
-      />
-    </div>
+    <article className={nodeClass}>
+      <div className="org-node-photo">
+        <Image
+          src={`/Officers/${o.year}/${o.filename}`}
+          alt={`${o.name} - ${o.position}`}
+          width={400}
+          height={300}
+          className="w-full h-full object-cover object-top"
+          sizes="(max-width: 640px) 280px, (max-width: 900px) 200px, 320px"
+        />
+      </div>
+    </article>
   )
 }
 
-// ── OfficersPage ──────────────────────────────────────────────────────────────
 export default function OfficersPage() {
   const officers = getOfficersFromPublicFolder()
   const year = officers.length > 0 ? officers[0].year : null
 
-  const row01_02 = officers.filter((o) => o.number >= 1 && o.number <= 2)
-  const row03_06 = officers.filter((o) => o.number >= 3 && o.number <= 6)
-  const row07_10 = officers.filter((o) => o.number >= 7 && o.number <= 10)
-  const row11_13 = officers.filter((o) => o.number >= 11 && o.number <= 13)
-  const rest = officers.filter((o) => o.number >= 14)
+  const president = officers.find((o) => o.number === 1)
+  const vp = officers.find((o) => o.number === 2)
+  const executive = officers.filter((o) => o.number >= 3 && o.number <= 6) // Secretary, Treasurer, Auditor, PRO
+  const board = officers.filter((o) => o.number >= 7)
 
   return (
     <SubpageLayout
@@ -41,64 +56,87 @@ export default function OfficersPage() {
       subtitle="Meet the dedicated leaders serving the Philippine Association of Local Government Accountants."
       eyebrow="Philippine Association of Local Government Accountants"
     >
-      <div className="bg-white py-12 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto">
-          {year && (
-            <div className="text-center mb-10">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-                National Officers {year}
-              </h2>
-            </div>
-          )}
-          {officers.length > 0 ? (
-            <div className="space-y-6">
-              {/* 01, 02: one per row */}
-              {row01_02.length > 0 && (
-                <div className="grid grid-cols-1 gap-6 max-w-xl mx-auto">
-                  {row01_02.map((o) => (
-                    <OfficerCard key={`${o.year}-${o.filename}`} o={o} />
-                  ))}
+      <div className="subpage-content-inner bg-[var(--sub-white)]">
+        {/* Centered to align with flag-bar star (same left: 50% + translateX(-50%) reference) */}
+        <div className="officers-center-ref">
+          <div className="officers-center-ref-inner">
+            {year && (
+              <div className="text-center mb-10">
+                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+                  National Officers {year}
+                </h2>
+                <p className="mt-2 text-gray-600 text-lg">
+                  Organizational chart
+                </p>
+              </div>
+            )}
+
+            {officers.length > 0 ? (
+              <div className="org-chart">
+              {/* Tier 1: President */}
+              {president && (
+                <div className="org-tier has-connector">
+                  <div className="org-tier-label">
+                    <span>Leadership</span>
+                  </div>
+                  <div className="org-row">
+                    <OrgNode o={president} tier="president" />
+                  </div>
                 </div>
               )}
-              {/* 03, 04, 05, 06: same row (4 cols) */}
-              {row03_06.length > 0 && (
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-                  {row03_06.map((o) => (
-                    <OfficerCard key={`${o.year}-${o.filename}`} o={o} />
-                  ))}
+
+              {/* Tier 2: Vice President */}
+              {vp && (
+                <div className="org-tier has-connector">
+                  <div className="org-row">
+                    <OrgNode o={vp} tier="vp" />
+                  </div>
                 </div>
               )}
-              {/* 07, 08, 09, 10: one per row */}
-              {row07_10.length > 0 && (
-                <div className="grid grid-cols-1 gap-6 max-w-xl mx-auto">
-                  {row07_10.map((o) => (
-                    <OfficerCard key={`${o.year}-${o.filename}`} o={o} />
-                  ))}
+
+              {/* Tier 3: Executive (Secretary, Treasurer, Auditor, PRO) */}
+              {executive.length > 0 && (
+                <div className="org-tier has-connector">
+                  <div className="org-tier-label">
+                    <span>Executive Officers</span>
+                  </div>
+                  <div className="org-row org-row--executive">
+                    {executive.map((o) => (
+                      <OrgNode key={`${o.year}-${o.filename}`} o={o} tier="executive" />
+                    ))}
+                  </div>
                 </div>
               )}
-              {/* 11, 12, 13: same row (3 cols) */}
-              {row11_13.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                  {row11_13.map((o) => (
-                    <OfficerCard key={`${o.year}-${o.filename}`} o={o} />
-                  ))}
+
+              {/* Tier 4: Board Members */}
+              {board.length > 0 && (
+                <div className="org-tier org-tier--board has-connector">
+                  <div className="org-tier-label">
+                    <span>Board of Directors</span>
+                  </div>
+                  <div className="org-row">
+                    {board.map((o) => (
+                      <OrgNode key={`${o.year}-${o.filename}`} o={o} tier="board" />
+                    ))}
+                  </div>
                 </div>
               )}
-              {/* Rest: 4 per row */}
-              {rest.length > 0 && (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-                  {rest.map((o) => (
-                    <OfficerCard key={`${o.year}-${o.filename}`} o={o} />
-                  ))}
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="text-center py-12 text-gray-600">
-              <p>No officer images found in <code className="bg-gray-100 px-1 rounded">public/Officers</code>.</p>
-              <p className="mt-2 text-sm">Add a year folder (e.g. 2025-2026) with images named like <code className="bg-gray-100 px-1 rounded">01 name.jpg</code>, <code className="bg-gray-100 px-1 rounded">02 name.jpg</code> to display them here, ordered by the number in the filename.</p>
-            </div>
-          )}
+              </div>
+            ) : (
+              <div className="text-center py-12 text-gray-600">
+              <p>
+                No officer images found in{' '}
+                <code className="bg-gray-100 px-1 rounded">public/Officers</code>.
+              </p>
+              <p className="mt-2 text-sm">
+                Add a year folder (e.g. 2025-2026) with images named like{' '}
+                <code className="bg-gray-100 px-1 rounded">01 name.jpg</code>,{' '}
+                <code className="bg-gray-100 px-1 rounded">02 name.jpg</code> to
+                display them here, ordered by the number in the filename.
+              </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </SubpageLayout>

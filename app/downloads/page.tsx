@@ -1,5 +1,4 @@
 import Section from '@/components/Section'
-import Card from '@/components/Card'
 import SubpageLayout from '@/components/SubpageLayout'
 
 export const metadata = {
@@ -72,16 +71,18 @@ export default function DownloadsPage() {
       subtitle="Access conference lectures, presentations, and other resources."
       eyebrow="Philippine Association of Local Government Accountants"
     >
-      {/* Downloads Sections */}
-      <Section className="bg-white">
-        <div className="max-w-6xl mx-auto space-y-12">
+      <div className="subpage-center-ref">
+        <div className="subpage-center-ref-inner w-full">
+          {/* Downloads Sections */}
+          <Section className="bg-white py-20 px-6 sm:px-8 w-full">
+            <div className="max-w-[1100px] mx-auto space-y-12">
           {downloadCategories.map((category, categoryIndex) => (
             <div key={categoryIndex}>
-              <div className="mb-8">
+              <div className="mb-6 text-center">
                 <h2 className="text-3xl font-bold text-gray-900 mb-2">{category.title}</h2>
                 <p className="text-gray-600">{category.description}</p>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
                 {category.items.map((item, index) => (
                   <div
                     key={index}
@@ -108,20 +109,22 @@ export default function DownloadsPage() {
               </div>
             </div>
           ))}
-        </div>
-      </Section>
+            </div>
+          </Section>
 
-      {/* Note Section */}
-      <Section className="bg-gray-50">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-gray-600 mb-4">
-            Downloads are available for registered members. Some materials may require login to access.
-          </p>
-          <p className="text-sm text-gray-500">
-            For access issues or to request specific materials, please contact us.
-          </p>
+          {/* Note Section */}
+          <Section className="bg-gray-50 py-20 px-6 sm:px-8 w-full">
+            <div className="max-w-[1100px] mx-auto py-8 text-center">
+              <p className="text-gray-600 mb-4">
+                Downloads are available for registered members. Some materials may require login to access.
+              </p>
+              <p className="text-sm text-gray-500">
+                For access issues or to request specific materials, please contact us.
+              </p>
+            </div>
+          </Section>
         </div>
-      </Section>
+      </div>
     </SubpageLayout>
   )
 }
