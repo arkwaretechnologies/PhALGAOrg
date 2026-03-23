@@ -17,7 +17,7 @@ export default function Navbar() {
 
   return (
     <>
-    <nav className="sticky top-0 left-0 right-0 z-[999] flex items-center justify-between h-[52px] sm:h-[56px] px-4 sm:px-6 lg:px-10 bg-[rgba(250,251,255,0.92)] backdrop-blur-[18px] border-b border-[rgba(0,56,168,0.12)] shadow-[0_2px_24px_rgba(0,56,168,0.07)]">
+    <nav className="sticky top-0 left-0 right-0 z-[999] flex items-center justify-between h-[52px] sm:h-[56px] px-4 sm:px-6 lg:px-10 bg-ph-white border-b border-[rgba(0,56,168,0.12)] shadow-[0_2px_24px_rgba(0,56,168,0.07)]">
       <Link href="/" className="flex items-center gap-2 sm:gap-2.5 no-underline min-w-0">
         <div className="relative w-8 h-8 sm:w-9 sm:h-9 flex-shrink-0 rounded-lg overflow-hidden">
           <Image

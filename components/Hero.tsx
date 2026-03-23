@@ -22,7 +22,6 @@ export default function Hero() {
           quality={90}
           sizes="100vw"
         />
-        <div className="pointer-events-none absolute inset-0 z-[1] bg-ph-blue/30" aria-hidden />
       </div>
     </section>
   )
