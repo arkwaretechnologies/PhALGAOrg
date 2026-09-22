@@ -1,0 +1,146 @@
+[
+  {
+    "id": "carina-s-padua",
+    "name": "CARINA S. PADUA, CPA",
+    "fiscalYear": "FY 2004-2006",
+    "location": "Lemery, Batangas",
+    "image": "/past-presidents/carina-s-padua.jpg",
+    "socials": {},
+    "sortOrder": 2004
+  },
+  {
+    "id": "emmanuel-d-magsino",
+    "name": "DR. EMMANUEL D. MAGSINO, CPA",
+    "fiscalYear": "FY 2006-2007",
+    "location": "City of General Trias, Cavite",
+    "image": "/past-presidents/emmanuel-d-magsino.jpg",
+    "socials": {},
+    "sortOrder": 2006
+  },
+  {
+    "id": "martin-j-yungco",
+    "name": "MARTIN J. YUNGCO, CPA",
+    "fiscalYear": "FY 2007-2008",
+    "location": "Liloan, Cebu",
+    "image": "/past-presidents/martin-j-yungco.jpg",
+    "socials": {},
+    "sortOrder": 2007
+  },
+  {
+    "id": "serlinda-c-atake",
+    "name": "SERLINDA C. ATAKE, CPA",
+    "fiscalYear": "FY 2008-2009",
+    "location": "Province of Davao del Norte",
+    "image": "/past-presidents/serlinda-c-atake.jpg",
+    "socials": {},
+    "sortOrder": 2008
+  },
+  {
+    "id": "evangeline-p-cruz",
+    "name": "EVANGELINE P. CRUZ, CPA",
+    "fiscalYear": "FY 2009-2010",
+    "location": "Navotas City",
+    "image": "/past-presidents/evangeline-p-cruz.jpg",
+    "socials": {},
+    "sortOrder": 2009
+  },
+  {
+    "id": "vilma-l-omodiagbe",
+    "name": "VILMA L. OMODIAGBE, CPA",
+    "fiscalYear": "FY 2010-2011",
+    "location": "Manapla, Negros Occidental",
+    "image": "/past-presidents/vilma-l-omodiagbe.jpg",
+    "socials": {},
+    "sortOrder": 2010
+  },
+  {
+    "id": "cynthia-g-ferraren",
+    "name": "CYNTHIA G. FERRAREN, CPA, MBA",
+    "fiscalYear": "FY 2011-2012",
+    "location": "Ozamiz City, Misamis Occidental",
+    "image": "/past-presidents/cynthia-g-ferraren.jpg",
+    "socials": {},
+    "sortOrder": 2011
+  },
+  {
+    "id": "maria-pilar-g-ramos",
+    "name": "MARIA PILAR G. RAMOS, CPA, MBA",
+    "fiscalYear": "FY 2012-2013",
+    "location": "Mulabay, Quezon",
+    "image": "/past-presidents/maria-pilar-g-ramos.jpg",
+    "socials": {},
+    "sortOrder": 2012
+  },
+  {
+    "id": "louie-a-rastica",
+    "name": "ATTY. LOUIE A. RASTICA, CPA",
+    "fiscalYear": "FY 2013-2014",
+    "location": "Bindoy, Negros Oriental",
+    "image": "/past-presidents/louie-a-rastica.jpg",
+    "socials": {},
+    "sortOrder": 2013
+  },
+  {
+    "id": "jerry-john-d-galan",
+    "name": "JERRY JOHN D. GALAN, CPA",
+    "fiscalYear": "FY 2014-2015",
+    "location": "Remedios T. Romualdes, Agusan del Norte",
+    "image": "/past-presidents/jerry-john-d-galan.jpg",
+    "socials": {},
+    "sortOrder": 2014
+  },
+  {
+    "id": "roselie-a-pangilinan",
+    "name": "ROSELIE A. PANGILINAN, CPA",
+    "fiscalYear": "FY 2015-2016",
+    "location": "City of Imus, Cavite",
+    "image": "/past-presidents/roselie-a-pangilinan.jpg",
+    "socials": {},
+    "sortOrder": 2015
+  },
+  {
+    "id": "arlene-rio-s-villar",
+    "name": "ARLENE RIO S. VILLAR, CPA",
+    "fiscalYear": "FY 2016-2017",
+    "location": "Albuera, Leyte",
+    "image": "/past-presidents/arlene-rio-s-villar.jpg",
+    "socials": {},
+    "sortOrder": 2016
+  },
+  {
+    "id": "mary-jane-h-lluisma",
+    "name": "MARY JANE H. LLUISMA, CPA",
+    "fiscalYear": "FY 2017-2018",
+    "location": "Linamon, Lanao del Norte",
+    "image": "/past-presidents/mary-jane-h-lluisma.jpg",
+    "socials": {},
+    "sortOrder": 2017
+  },
+  {
+    "id": "lucia-p-kisim",
+    "name": "LUCIA P. KISIM, CPA",
+    "fiscalYear": "FY 2018-2019",
+    "location": "Province of Benguet",
+    "image": "/past-presidents/lucia-p-kisim.jpg",
+    "socials": {},
+    "sortOrder": 2018
+  },
+  {
+    "id": "vicente-luis-d-marcos",
+    "name": "VICENTE LUIS D. MARCOS, CPA",
+    "fiscalYear": "FY 2019-2022",
+    "location": "Province of Aklan",
+    "image": "/past-presidents/vicente-luis-d-marcos.jpg",
+    "socials": {},
+    "sortOrder": 2019
+  },
+  {
+    "id": "narvin-b-lachica",
+    "name": "NARVIN B. LACHICA, CPA",
+    "fiscalYear": "FY 2022-2023",
+    "location": "Alabel, Sarangani Province",
+    "image": "/past-presidents/narvin-b-lachica.jpg",
+    "socials": {},
+    "sortOrder": 2022
+  }
+]
