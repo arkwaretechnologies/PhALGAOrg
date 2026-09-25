@@ -1,64 +1,73 @@
 import Link from 'next/link'
+import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import SectionHeading, { accent } from '@/components/SectionHeading'
+import { BlurFade } from '@/components/ui/blur-fade'
 
-const news = [
+const updates = [
   {
-    thumb: '📋',
-    thumbClass: 'nt-1',
-    tag: 'Circular',
-    tagClass: 'bg-ph-blue/10 text-ph-blue',
-    title: 'COA Circular 2019-001 – Barangay Accounting',
-    desc: 'Commission on Audit guidelines on proper accounting procedures for barangay funds and assets.',
-    date: '📅 2019 · Commission on Audit',
-    href: '/circulars',
+    agency: 'COA',
+    kind: 'Circular',
+    title: 'COA Circular 2019-001 — Barangay Accounting',
+    desc: 'Guidelines on proper accounting procedures for barangay funds and assets.',
+    date: '2019',
   },
   {
-    thumb: '⚖️',
-    thumbClass: 'nt-2',
-    tag: 'Policy',
-    tagClass: 'bg-ph-red/10 text-ph-red',
-    title: 'Mandanas Ruling Update – August 2023',
-    desc: 'Implementation guidelines and implications of the landmark Mandanas-Garcia ruling for LGU budget allocations.',
-    date: '📅 August 2023 · DILG',
-    href: '/circulars',
+    agency: 'DILG',
+    kind: 'Policy',
+    title: 'Mandanas Ruling Update',
+    desc: 'Implementation guidelines and implications of the Mandanas-Garcia ruling for LGU budget allocations.',
+    date: 'August 2023',
   },
   {
-    thumb: '📢',
-    thumbClass: 'nt-3',
-    tag: 'Advisory',
-    tagClass: 'bg-ph-gold/15 text-[#9a7d00]',
-    title: 'Executive Order 77 – Local Finance',
-    desc: 'Presidential executive order outlining fiscal and financial administration guidelines for local government units.',
-    date: '📅 March 2019 · Office of the President',
-    href: '/circulars',
+    agency: 'OP',
+    kind: 'Advisory',
+    title: 'Executive Order 77 — Local Finance',
+    desc: 'Fiscal and financial administration guidelines for local government units.',
+    date: 'March 2019',
   },
 ]
 
 export default function NewsSection() {
   return (
-    <section className="py-24 bg-ph-white">
-      <div className="container-ph max-w-[1200px] mx-auto px-6 lg:px-10">
-        <div className="section-label"><span>Updates</span></div>
-        <h2 className="section-title">Latest <span className="accent">Circulars & News</span></h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-          {news.map((n, i) => (
-            <Link
-              key={n.title}
-              href={n.href}
-              className={`fade-up group rounded-[14px] border border-ph-border overflow-hidden transition-all hover:-translate-y-1 hover:shadow-ph-lg`}
-              style={{ transitionDelay: `${i * 0.08}s` }}
-            >
-              <div className={`h-[130px] flex items-center justify-center text-5xl ${n.thumbClass === 'nt-1' ? 'bg-gradient-to-br from-[#e8f0ff] to-[#cddaff]' : n.thumbClass === 'nt-2' ? 'bg-gradient-to-br from-[#fff0f2] to-[#ffd6db]' : 'bg-gradient-to-br from-[#fffbe0] to-[#fff3b0]'}`}>
-                {n.thumb}
-              </div>
-              <div className="p-6">
-                <span className={`inline-block text-[11px] font-bold uppercase tracking-[0.1em] px-2.5 py-1 rounded-full mb-3 ${n.tagClass}`}>
-                  {n.tag}
-                </span>
-                <h4 className="text-[15px] font-semibold text-ph-text leading-snug mb-2">{n.title}</h4>
-                <p className="text-[13px] text-ph-text-muted leading-relaxed">{n.desc}</p>
-                <p className="text-xs text-ph-text-muted mt-4">{n.date}</p>
-              </div>
+    <section className="py-24 lg:py-32">
+      <div className="container-site">
+        <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+          <SectionHeading
+            eyebrow="Regulatory updates"
+            title={['Circulars &', accent('advisories')]}
+            lede="Key issuances from COA, DILG and national agencies that shape how LGU accountants work."
+          />
+          <BlurFade delay={0.2}>
+            <Link href="/circulars" className="btn-outline group shrink-0">
+              All circulars
+              <ArrowRight className="arrow-nudge h-4 w-4" />
             </Link>
+          </BlurFade>
+        </div>
+
+        <div className="mt-14 grid gap-5 md:grid-cols-3">
+          {updates.map((u, i) => (
+            <BlurFade key={u.title} delay={i * 0.08}>
+              <Link
+                href="/circulars"
+                className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-ph-line bg-white p-7 transition-all duration-500 hover:-translate-y-1 hover:border-ph-navy/20 hover:shadow-lift"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ph-navy font-display text-[13px] font-semibold tracking-wide text-ph-gold-light">
+                    {u.agency}
+                  </span>
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ph-muted">{u.kind}</span>
+                </div>
+                <h3 className="mt-8 font-display text-[21px] font-semibold leading-snug text-ph-ink">{u.title}</h3>
+                <p className="mb-8 mt-3 text-[14.5px] leading-relaxed text-ph-muted">{u.desc}</p>
+                <div className="mt-auto flex items-center justify-between border-t border-ph-line pt-5 text-[13px]">
+                  <span className="text-ph-muted">{u.date}</span>
+                  <ArrowUpRight className="h-4 w-4 text-ph-navy transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </div>
+                {/* Gold rule that grows along the bottom edge on hover */}
+                <span className="absolute inset-x-0 bottom-0 h-[3px] origin-left scale-x-0 bg-ph-gold transition-transform duration-500 group-hover:scale-x-100" />
+              </Link>
+            </BlurFade>
           ))}
         </div>
       </div>

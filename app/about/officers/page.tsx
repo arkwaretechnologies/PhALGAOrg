@@ -1,142 +1,50 @@
-import Image from 'next/image'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import SubpageLayout from '@/components/SubpageLayout'
-import { getOfficersFromPublicFolder, type OfficerFromFile } from '@/lib/officers'
-import './OrgChart.css'
+import OfficersChart from '@/components/OfficersChart'
+import { getOfficersFromPublicFolder } from '@/lib/officers'
 
 export const metadata = {
   title: 'PhALGA Officers',
   description:
-    'Meet the National Officers, Council of Advisers, and Past Presidents of the Philippine Association of Local Government Accountants.',
-}
-
-type TierKind = 'president' | 'vp' | 'executive' | 'board'
-
-function OrgNode({
-  o,
-  tier,
-}: {
-  o: OfficerFromFile
-  tier: TierKind
-}) {
-  const nodeClass =
-    tier === 'president'
-      ? 'org-node org-node--president'
-      : tier === 'vp'
-        ? 'org-node org-node--vp'
-        : 'org-node'
-
-  return (
-    <article className={nodeClass}>
-      <div className="org-node-photo">
-        <Image
-          src={`/Officers/${o.year}/${o.filename}`}
-          alt={`${o.name} - ${o.position}`}
-          width={400}
-          height={300}
-          className="w-full h-full object-cover object-top"
-          sizes="(max-width: 640px) 280px, (max-width: 900px) 200px, 320px"
-        />
-      </div>
-    </article>
-  )
+    'Meet the National Officers, Board of Trustees and Council of Advisers of the Philippine Association of Local Government Accountants.',
 }
 
 export default function OfficersPage() {
   const officers = getOfficersFromPublicFolder()
-  const year = officers.length > 0 ? officers[0].year : null
-
-  const president = officers.find((o) => o.number === 1)
-  const vp = officers.find((o) => o.number === 2)
-  const executive = officers.filter((o) => o.number >= 3 && o.number <= 6) // Secretary, Treasurer, Auditor, PRO
-  const board = officers.filter((o) => o.number >= 7)
+  const year = officers.length > 0 ? officers[0].year.replace('-', '–') : null
 
   return (
     <SubpageLayout
-      title="PhALGA Officers"
+      eyebrow={year ? `Term ${year}` : 'Leadership'}
+      title="National"
+      titleAccent="Officers"
       subtitle="Meet the dedicated leaders serving the Philippine Association of Local Government Accountants."
-      eyebrow="Philippine Association of Local Government Accountants"
     >
-      <div className="subpage-content-inner bg-[var(--sub-white)]">
-        {/* Centered to align with flag-bar star (same left: 50% + translateX(-50%) reference) */}
-        <div className="officers-center-ref">
-          <div className="officers-center-ref-inner">
-            {year && (
-              <div className="text-center mb-10">
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-                  National Officers {year}
-                </h2>
-                <p className="mt-2 text-gray-600 text-lg">
-                  Organizational chart
-                </p>
-              </div>
-            )}
-
-            {officers.length > 0 ? (
-              <div className="org-chart">
-              {/* Tier 1: President */}
-              {president && (
-                <div className="org-tier has-connector">
-                  <div className="org-tier-label">
-                    <span>Leadership</span>
-                  </div>
-                  <div className="org-row">
-                    <OrgNode o={president} tier="president" />
-                  </div>
-                </div>
-              )}
-
-              {/* Tier 2: Vice President */}
-              {vp && (
-                <div className="org-tier has-connector">
-                  <div className="org-row">
-                    <OrgNode o={vp} tier="vp" />
-                  </div>
-                </div>
-              )}
-
-              {/* Tier 3: Executive (Secretary, Treasurer, Auditor, PRO) */}
-              {executive.length > 0 && (
-                <div className="org-tier has-connector">
-                  <div className="org-tier-label">
-                    <span>Executive Officers</span>
-                  </div>
-                  <div className="org-row org-row--executive">
-                    {executive.map((o) => (
-                      <OrgNode key={`${o.year}-${o.filename}`} o={o} tier="executive" />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Tier 4: Board Members */}
-              {board.length > 0 && (
-                <div className="org-tier org-tier--board has-connector">
-                  <div className="org-tier-label">
-                    <span>Board of Directors</span>
-                  </div>
-                  <div className="org-row">
-                    {board.map((o) => (
-                      <OrgNode key={`${o.year}-${o.filename}`} o={o} tier="board" />
-                    ))}
-                  </div>
-                </div>
-              )}
-              </div>
-            ) : (
-              <div className="text-center py-12 text-gray-600">
-              <p>
-                No officer images found in{' '}
-                <code className="bg-gray-100 px-1 rounded">public/Officers</code>.
-              </p>
-              <p className="mt-2 text-sm">
-                Add a year folder (e.g. 2025-2026) with images named like{' '}
-                <code className="bg-gray-100 px-1 rounded">01 name.jpg</code>,{' '}
-                <code className="bg-gray-100 px-1 rounded">02 name.jpg</code> to
-                display them here, ordered by the number in the filename.
-              </p>
-              </div>
-            )}
+      <div className="container-site py-16 lg:py-24">
+        {officers.length > 0 ? (
+          <OfficersChart officers={officers} />
+        ) : (
+          <div className="mx-auto max-w-lg rounded-3xl border border-dashed border-ph-line bg-white p-10 text-center text-ph-muted">
+            <p>
+              No officer images found in <code className="rounded bg-ph-mist px-1">public/Officers</code>.
+            </p>
+            <p className="mt-2 text-sm">
+              Add a year folder (e.g. 2025-2026) with images named like <code className="rounded bg-ph-mist px-1">01 name.jpg</code>,{' '}
+              <code className="rounded bg-ph-mist px-1">02 name.jpg</code> to display them here, ordered by the number in the
+              filename.
+            </p>
           </div>
+        )}
+
+        <div className="mt-24 flex flex-col items-center gap-4 border-t border-ph-line pt-12 text-center">
+          <p className="font-display text-[22px] text-ph-ink">
+            Two decades of leadership, <span className="italic text-ph-gold-deep">one association.</span>
+          </p>
+          <Link href="/about/past-presidents" className="btn-outline group">
+            Past National Presidents
+            <ArrowRight className="arrow-nudge h-4 w-4" />
+          </Link>
         </div>
       </div>
     </SubpageLayout>

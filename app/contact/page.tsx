@@ -1,25 +1,28 @@
 'use client'
 
 import { useState } from 'react'
-import Section from '@/components/Section'
-import Button from '@/components/Button'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ArrowRight, CheckCircle2, Clock, Loader2, Mail, MapPin } from 'lucide-react'
 import SubpageLayout from '@/components/SubpageLayout'
+import { BlurFade } from '@/components/ui/blur-fade'
+import { site } from '@/lib/site'
+
+const subjects = [
+  { value: 'membership', label: 'Membership' },
+  { value: 'conferences', label: 'Conferences & events' },
+  { value: 'downloads', label: 'Downloads & member access' },
+  { value: 'records', label: 'Archive or records request' },
+  { value: 'partnership', label: 'Partnership' },
+  { value: 'general', label: 'General inquiry' },
+]
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  })
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
+    setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,205 +36,179 @@ export default function ContactPage() {
       setIsSubmitting(false)
       setSubmitStatus('success')
       setFormData({ name: '', email: '', subject: '', message: '' })
-      
+
       // Reset success message after 5 seconds
-      setTimeout(() => {
-        setSubmitStatus('idle')
-      }, 5000)
+      setTimeout(() => setSubmitStatus('idle'), 5000)
     }, 1000)
   }
 
   return (
     <SubpageLayout
-      title="Get in Touch"
-      subtitle="We'd love to hear from you. Reach out to learn more about our programs or get involved."
-      eyebrow="Philippine Association of Local Government Accountants"
+      eyebrow="The Secretariat"
+      title="Get in"
+      titleAccent="Touch"
+      subtitle="Reach out to learn more about our programs, membership, or conference materials."
     >
-      {/* Contact Section */}
-      <Section className="bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Send us a Message</h2>
-              <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="container-site py-16 lg:py-24">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-14">
+          {/* Contact information */}
+          <BlurFade>
+            <aside className="relative h-full overflow-hidden rounded-3xl bg-ph-navy p-8 text-white lg:p-10">
+              <div aria-hidden className="bg-grain pointer-events-none absolute inset-0 opacity-[0.06]" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                aria-hidden
+                src="/assets/rosette-light.svg"
+                alt=""
+                className="pointer-events-none absolute -bottom-40 -right-40 w-[520px] max-w-none opacity-[0.1]"
+              />
+              <div className="relative">
+                <p className="eyebrow eyebrow-light">Contact information</p>
+                <h2 className="mt-5 font-display text-[1.9rem] font-semibold leading-tight">
+                  We’d be glad to <span className="italic text-ph-gold-light">hear from you.</span>
+                </h2>
+
+                <ul className="mt-10 space-y-7">
+                  <li className="flex gap-4">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-ph-gold-light">
+                      <Mail className="h-5 w-5" strokeWidth={1.6} />
+                    </span>
+                    <div>
+                      <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-white/50">Email</p>
+                      <a href={`mailto:${site.email}`} className="link-underline mt-1 inline-block text-[16px] text-white">
+                        {site.email}
+                      </a>
+                    </div>
+                  </li>
+                  <li className="flex gap-4">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-ph-gold-light">
+                      <MapPin className="h-5 w-5" strokeWidth={1.6} />
+                    </span>
+                    <div>
+                      <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-white/50">Office</p>
+                      <p className="mt-1 text-[16px] leading-relaxed">
+                        {site.office[0]}
+                        <br />
+                        {site.office[1]}
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex gap-4">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-ph-gold-light">
+                      <Clock className="h-5 w-5" strokeWidth={1.6} />
+                    </span>
+                    <div>
+                      <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-white/50">Registration</p>
+                      <p className="mt-1 text-[16px]">SEC Reg. No. {site.secRegistration}</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </aside>
+          </BlurFade>
+
+          {/* Form */}
+          <BlurFade delay={0.1}>
+            <div className="rounded-3xl border border-ph-line bg-white p-8 shadow-card lg:p-10">
+              <h2 className="font-display text-[1.9rem] font-semibold text-ph-ink">Send us a message</h2>
+              <p className="mt-2 text-[14.5px] text-ph-muted">Fields marked * are required.</p>
+
+              <form onSubmit={handleSubmit} className="mt-8 grid gap-6 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="name" className="field-label">
                     Name *
                   </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-philippine-blue focus:border-transparent transition-all"
-                    placeholder="Your name"
-                  />
+                  <input type="text" id="name" name="name" required value={formData.name} onChange={handleChange} className="field" placeholder="Juan dela Cruz" autoComplete="name" />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label htmlFor="email" className="field-label">
                     Email *
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-philippine-blue focus:border-transparent transition-all"
-                    placeholder="your.email@example.com"
-                  />
+                  <input type="email" id="email" name="email" required value={formData.email} onChange={handleChange} className="field" placeholder="you@lgu.gov.ph" autoComplete="email" />
                 </div>
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
+                <div className="sm:col-span-2">
+                  <span id="subject-label" className="field-label">
                     Subject *
-                  </label>
-                  <select
-                    id="subject"
-                    name="subject"
-                    required
-                    value={formData.subject}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-philippine-blue focus:border-transparent transition-all"
-                  >
-                    <option value="">Select a subject</option>
-                    <option value="general">General Inquiry</option>
-                    <option value="volunteer">Volunteer Opportunities</option>
-                    <option value="programs">Programs & Services</option>
-                    <option value="partnership">Partnership Opportunities</option>
-                    <option value="donation">Donations & Support</option>
-                    <option value="other">Other</option>
-                  </select>
+                  </span>
+                  <div role="radiogroup" aria-labelledby="subject-label" className="flex flex-wrap gap-2">
+                    {subjects.map((s) => {
+                      const checked = formData.subject === s.value
+                      return (
+                        <label
+                          key={s.value}
+                          className={`relative cursor-pointer rounded-full border px-4 py-2 text-[13.5px] font-medium transition-colors duration-200 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ph-brand ${
+                            checked ? 'border-ph-navy text-white' : 'border-ph-line text-ph-ink/75 hover:border-ph-navy/40'
+                          }`}
+                        >
+                          {checked && (
+                            <motion.span
+                              layoutId="subject-pill"
+                              className="absolute inset-0 rounded-full bg-ph-navy"
+                              transition={{ type: 'spring', stiffness: 420, damping: 34 }}
+                            />
+                          )}
+                          <input
+                            type="radio"
+                            name="subject"
+                            value={s.value}
+                            checked={checked}
+                            onChange={handleChange}
+                            required
+                            className="sr-only"
+                          />
+                          <span className="relative">{s.label}</span>
+                        </label>
+                      )
+                    })}
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+                <div className="sm:col-span-2">
+                  <label htmlFor="message" className="field-label">
                     Message *
                   </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    required
-                    rows={6}
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-philippine-blue focus:border-transparent transition-all resize-none"
-                    placeholder="Your message..."
-                  />
+                  <textarea id="message" name="message" required rows={6} value={formData.message} onChange={handleChange} className="field resize-none" placeholder="How can we help?" />
                 </div>
-                {submitStatus === 'success' && (
-                  <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
-                    Thank you for your message! We'll get back to you soon.
-                  </div>
-                )}
-                {submitStatus === 'error' && (
-                  <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
-                    Something went wrong. Please try again later.
-                  </div>
-                )}
-                <Button
-                  type="submit"
-                  variant="primary"
-                  size="large"
-                  className="w-full"
-                  onClick={() => {}}
-                >
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
-                </Button>
+
+                <div className="sm:col-span-2">
+                  <AnimatePresence>
+                    {submitStatus === 'success' && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="overflow-hidden"
+                      >
+                        <p className="mb-5 flex items-center gap-3 rounded-2xl bg-emerald-50 p-4 text-[14.5px] text-emerald-800" role="status">
+                          <CheckCircle2 className="h-5 w-5 shrink-0" />
+                          Thank you for your message! We’ll get back to you soon.
+                        </p>
+                      </motion.div>
+                    )}
+                    {submitStatus === 'error' && (
+                      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-5 rounded-2xl bg-red-50 p-4 text-[14.5px] text-red-800" role="alert">
+                        Something went wrong. Please try again later.
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+                  <button type="submit" disabled={isSubmitting} className="btn-primary group w-full !py-4 disabled:opacity-70 sm:w-auto">
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        Sending…
+                      </>
+                    ) : (
+                      <>
+                        Send message
+                        <ArrowRight className="arrow-nudge h-4 w-4" />
+                      </>
+                    )}
+                  </button>
+                </div>
               </form>
             </div>
-
-            {/* Contact Information */}
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Contact Information</h2>
-              <div className="space-y-6">
-                <div className="p-6 bg-gray-50 rounded-lg">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center">
-                    <svg
-                      className="w-5 h-5 text-philippine-blue mr-2"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                    Email
-                  </h3>
-                  <a
-                    href="mailto:phalga.2004@gmail.com"
-                    className="text-philippine-blue hover:text-blue-900 transition-colors"
-                  >
-                    phalga.2004@gmail.com
-                  </a>
-                </div>
-
-                <div className="p-6 bg-gray-50 rounded-lg">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                    <svg
-                      className="w-5 h-5 text-philippine-blue mr-2"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    Office Location
-                  </h3>
-                  <p className="text-gray-600">
-                    Office of the City Accountant<br />
-                    Navotas City, Metro Manila
-                  </p>
-                </div>
-
-                <div className="p-6 bg-gradient-to-br from-philippine-blue to-blue-900 text-white rounded-lg">
-                  <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
-                  <p className="text-blue-100 mb-4">
-                    Stay connected with us on social media for the latest updates and news.
-                  </p>
-                  <div className="flex space-x-4">
-                    <a
-                      href="#"
-                      className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                      aria-label="Facebook"
-                    >
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                      </svg>
-                    </a>
-                    <a
-                      href="#"
-                      className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                      aria-label="Twitter"
-                    >
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-                      </svg>
-                    </a>
-                    <a
-                      href="#"
-                      className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                      aria-label="Instagram"
-                    >
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z" />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </BlurFade>
         </div>
-      </Section>
+      </div>
     </SubpageLayout>
   )
 }

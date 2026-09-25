@@ -1,96 +1,114 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { ArrowUpRight, Mail, MapPin } from 'lucide-react'
+import { site } from '@/lib/site'
+import BackToTop from '@/components/BackToTop'
 
-const orgLinks = [
-  { href: '/about', label: 'About PhALGA' },
-  { href: '/about/officers', label: 'National Officers' },
-  { href: '/about', label: 'Council of Advisers' },
-  { href: '/about/past-presidents', label: 'Past Presidents' },
-]
-
-const programLinks = [
-  { href: '/events', label: 'Annual Conference' },
-  { href: '/events', label: 'Geo Conferences' },
-  { href: '/events', label: 'Seminars' },
-  { href: '/downloads', label: 'Downloads' },
-]
-
-const resourceLinks = [
-  { href: '/circulars', label: 'COA Circulars' },
-  { href: '/circulars', label: 'DILG Memoranda' },
-  { href: '/circulars', label: 'DBM Updates' },
-  { href: '/contact', label: 'Contact Us' },
+const columns = [
+  {
+    title: 'Association',
+    links: [
+      { href: '/about', label: 'About PhALGA' },
+      { href: '/about/officers', label: 'National Officers' },
+      { href: '/about/past-presidents', label: 'Past Presidents' },
+      { href: '/about/archives', label: 'Archives' },
+    ],
+  },
+  {
+    title: 'Programs',
+    links: [
+      { href: '/events', label: 'Annual National Conference' },
+      { href: '/events', label: 'Geographical Conferences' },
+      { href: '/downloads', label: 'Conference Materials' },
+      { href: '/login', label: 'Member Login' },
+    ],
+  },
+  {
+    title: 'Resources',
+    links: [
+      { href: '/circulars', label: 'COA Circulars' },
+      { href: '/circulars', label: 'DILG Memoranda' },
+      { href: '/circulars', label: 'DBM & BIR Updates' },
+      { href: '/contact', label: 'Contact the Secretariat' },
+    ],
+  },
 ]
 
 export default function Footer() {
   return (
-    <footer className="bg-ph-text text-white/70">
-      <div className="container-ph max-w-[1200px] mx-auto px-6 lg:px-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 py-16 border-b border-white/10">
-          <div className="lg:col-span-1">
-            <Link href="/" className="inline-flex items-center gap-3 mb-5 no-underline">
-              <div className="relative w-11 h-11 flex-shrink-0 rounded-[10px] overflow-hidden">
-                <Image
-                  src="/logo.png"
-                  alt="PhALGA"
-                  width={44}
-                  height={44}
-                  className="object-contain"
-                />
-              </div>
-              <div className="flex flex-col">
-                <strong className="font-display text-xl font-bold text-white leading-none tracking-wide">PhALGA</strong>
-                <small className="text-[10px] font-medium text-white/50 tracking-[0.02em] leading-tight">(Philippine Association of Local Government Accountants), Inc.</small>
-              </div>
+    <footer className="relative overflow-hidden bg-ph-navy-deep text-white/65">
+      <div aria-hidden className="bg-grain pointer-events-none absolute inset-0 opacity-[0.06]" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        aria-hidden
+        src="/assets/rosette-light.svg"
+        alt=""
+        className="pointer-events-none absolute -right-64 -top-40 w-[900px] max-w-none opacity-[0.07]"
+      />
+
+      <div className="container-site relative">
+        <div className="grid gap-12 border-b border-white/10 py-16 lg:grid-cols-[1.3fr_2fr] lg:gap-20 lg:py-20">
+          <div>
+            <Link href="/" className="inline-flex items-center gap-4">
+              <span className="flex h-14 w-16 items-center justify-center rounded-xl bg-white p-1.5">
+                <Image src="/logo.png" alt="" width={56} height={46} className="object-contain" />
+              </span>
+              <span>
+                <span className="block font-display text-2xl font-semibold text-white">PhALGA</span>
+                <span className="mt-0.5 block text-[12px] text-white/50">Established {site.founded}</span>
+              </span>
             </Link>
-            <p className="text-sm leading-relaxed text-white/50 max-w-[280px]">
-              PhALGA (Philippine Association of Local Government Accountants), Inc. — advancing professionalism and accountability in local governance across the Philippines.
+            <p className="mt-6 max-w-sm text-[14.5px] leading-relaxed text-white/60">
+              The {site.legalName} — advancing professionalism, transparency and accountability in local financial
+              governance across the Philippines.
             </p>
-          </div>
-          <div>
-            <h5 className="text-xs font-bold uppercase tracking-[0.1em] text-ph-gold mb-5">Organization</h5>
-            <ul className="list-none">
-              {orgLinks.map((link) => (
-                <li key={link.href} className="mb-3">
-                  <Link href={link.href} className="text-sm text-white/55 no-underline transition-colors hover:text-white">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+            <ul className="mt-8 space-y-3 text-[14px]">
+              <li className="flex items-start gap-3">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-ph-gold-light" strokeWidth={1.8} />
+                <span>{site.office.join(', ')}</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-ph-gold-light" strokeWidth={1.8} />
+                <a href={`mailto:${site.email}`} className="link-underline text-white/80 hover:text-white">
+                  {site.email}
+                </a>
+              </li>
             </ul>
           </div>
-          <div>
-            <h5 className="text-xs font-bold uppercase tracking-[0.1em] text-ph-gold mb-5">Programs</h5>
-            <ul className="list-none">
-              {programLinks.map((link) => (
-                <li key={link.href} className="mb-3">
-                  <Link href={link.href} className="text-sm text-white/55 no-underline transition-colors hover:text-white">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h5 className="text-xs font-bold uppercase tracking-[0.1em] text-ph-gold mb-5">Resources</h5>
-            <ul className="list-none">
-              {resourceLinks.map((link) => (
-                <li key={link.href} className="mb-3">
-                  <Link href={link.href} className="text-sm text-white/55 no-underline transition-colors hover:text-white">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+
+          <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
+            {columns.map((col) => (
+              <div key={col.title}>
+                <h2 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-ph-gold-light">{col.title}</h2>
+                <ul className="mt-5 space-y-3">
+                  {col.links.map((link) => (
+                    <li key={link.label}>
+                      <Link
+                        href={link.href}
+                        className="group inline-flex items-center gap-1 text-[14px] text-white/65 transition-colors hover:text-white"
+                      >
+                        {link.label}
+                        <ArrowUpRight className="h-3.5 w-3.5 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 py-6">
-          <p className="text-[13px] text-white/35" suppressHydrationWarning>
-            © {new Date().getFullYear()} PhALGA (Philippine Association of Local Government Accountants), Inc. All rights reserved.
+
+        <div className="flex flex-col items-start justify-between gap-5 py-7 text-[12.5px] text-white/45 sm:flex-row sm:items-center">
+          <p suppressHydrationWarning>
+            © {new Date().getFullYear()} {site.legalName} · SEC Reg. No. {site.secRegistration}
           </p>
-          <div className="flex overflow-hidden rounded h-4 w-12">
-            <div className="flex-1 bg-ph-blue" />
-            <div className="flex-1 bg-ph-red" />
+          <div className="flex items-center gap-5">
+            <span aria-hidden className="flex h-1.5 w-14 overflow-hidden rounded-full">
+              <span className="flex-1 bg-ph-brand" />
+              <span className="flex-1 bg-ph-crimson" />
+              <span className="w-3 bg-ph-sun" />
+            </span>
+            <BackToTop />
           </div>
         </div>
       </div>

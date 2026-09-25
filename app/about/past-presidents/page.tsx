@@ -3,7 +3,7 @@ import PastPresidentsTimeline from '@/components/PastPresidentsTimeline'
 import { getPastPresidents } from '@/lib/pastPresidents'
 
 export const metadata = {
-  title: 'Past Presidents | PhALGA',
+  title: 'Past Presidents',
   description:
     'Past National Presidents of the Philippine Association of Local Government Accountants (PhALGA), Inc.',
 }
@@ -16,7 +16,7 @@ export default function PastPresidentsPage() {
       title="Past"
       titleAccent="Presidents"
       subtitle="Honoring the leaders who have guided PhALGA through decades of service to local government accountants nationwide."
-      eyebrow="Philippine Association of Local Government Accountants"
+      eyebrow="Since 2004"
     >
       <PastPresidentsTimeline presidents={presidents} />
     </SubpageLayout>

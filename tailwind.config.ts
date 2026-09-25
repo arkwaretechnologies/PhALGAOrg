@@ -10,45 +10,59 @@ const config: Config = {
     extend: {
       colors: {
         ph: {
-          blue: '#0038A8',
-          'blue-dark': '#002070',
-          'blue-light': '#1a4fc4',
-          red: '#CE1126',
-          'red-light': '#e8192e',
-          gold: '#FCD116',
-          'gold-dark': '#e6bd00',
-          white: '#FAFBFF',
-          'off-white': '#F0F3FA',
-          text: '#0d1b3e',
-          'text-muted': '#5a6a8a',
-          border: 'rgba(0,56,168,0.12)',
+          // Institutional base
+          navy: '#0B2A5B',
+          'navy-deep': '#061A3B',
+          'navy-soft': '#1B3B73',
+          ink: '#0E1A2B',
+          muted: '#5C6577',
+          // Philippine flag, used as accents
+          brand: '#0038A8',
+          crimson: '#B31B2C',
+          sun: '#FCD116',
+          // Champagne, taken from the 2025–2026 officers photograph
+          gold: '#B8904A',
+          'gold-deep': '#8A6A2E',
+          'gold-light': '#E6D2A6',
+          // Surfaces
+          paper: '#FAF8F3',
+          mist: '#F3EFE7',
+          line: '#E6E0D4',
         },
       },
       fontFamily: {
-        display: ['var(--font-playfair)', 'Georgia', 'serif'],
-        sans: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-serif)', 'Georgia', 'serif'],
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        'ph': '0 2px 24px rgba(0,56,168,0.07)',
-        'ph-lg': '0 8px 32px rgba(0,56,168,0.12)',
+        card: '0 1px 2px rgba(14,26,43,0.04), 0 8px 24px -12px rgba(14,26,43,0.12)',
+        lift: '0 2px 4px rgba(14,26,43,0.04), 0 24px 48px -20px rgba(11,42,91,0.28)',
       },
-      animation: {
-        'pulse-ring': 'pulse-ring 4s ease-in-out infinite',
-        'spin-slow': 'spin-slow 30s linear infinite',
-        'slide-up': 'slide-up 0.6s ease both',
+      maxWidth: {
+        site: '1240px',
       },
       keyframes: {
-        'pulse-ring': {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.4' },
+        marquee: {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(calc(-100% - var(--gap)))' },
+        },
+        'marquee-reverse': {
+          from: { transform: 'translateX(calc(-100% - var(--gap)))' },
+          to: { transform: 'translateX(0)' },
         },
         'spin-slow': {
           to: { transform: 'rotate(360deg)' },
         },
-        'slide-up': {
-          from: { opacity: '0', transform: 'translateY(24px)' },
-          to: { opacity: '1', transform: 'translateY(0)' },
+        shine: {
+          from: { backgroundPosition: '200% 0' },
+          to: { backgroundPosition: '-200% 0' },
         },
+      },
+      animation: {
+        marquee: 'marquee var(--duration) linear infinite',
+        'marquee-reverse': 'marquee-reverse var(--duration) linear infinite',
+        'spin-slow': 'spin-slow 90s linear infinite',
+        shine: 'shine 6s linear infinite',
       },
     },
   },

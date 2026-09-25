@@ -1,29 +1,49 @@
 import Link from 'next/link'
+import { ArrowRight, LockKeyhole } from 'lucide-react'
+import { BlurFade } from '@/components/ui/blur-fade'
+import { RevealHeading } from '@/components/ui/reveal-heading'
 
 export default function DownloadsSection() {
   return (
-    <section className="py-20 bg-ph-off-white">
-      <div className="container-ph max-w-[1200px] mx-auto px-6 lg:px-10">
-        <div className="bg-gradient-to-br from-ph-blue to-ph-blue-dark rounded-[24px] p-16 flex flex-col lg:flex-row items-center justify-between gap-8 relative overflow-hidden">
-          <span className="absolute right-12 top-1/2 -translate-y-1/2 text-[200px] opacity-[0.04] text-ph-gold" aria-hidden>★</span>
-          <div className="relative z-10">
-            <h2 className="font-display text-3xl font-bold text-white mb-2">Access Conference Materials</h2>
-            <p className="text-base text-white/70">
-              Download lecture decks, circulars, and guidelines from all PhALGA events.
-            </p>
+    <section className="pb-24 lg:pb-32">
+      <div className="container-site">
+        <BlurFade>
+          <div className="relative overflow-hidden rounded-[2rem] bg-ph-navy px-7 py-16 text-white sm:px-12 lg:px-16 lg:py-20">
+            <div aria-hidden className="bg-grain pointer-events-none absolute inset-0 opacity-[0.06]" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              aria-hidden
+              src="/assets/sun-light.svg"
+              alt=""
+              className="pointer-events-none absolute -right-24 -top-24 w-[520px] max-w-none animate-spin-slow opacity-[0.12]"
+            />
+            <div aria-hidden className="pointer-events-none absolute -bottom-40 left-1/4 h-80 w-[600px] rounded-full bg-ph-gold/25 blur-[120px]" />
+
+            <div className="relative grid items-end gap-10 lg:grid-cols-[1.4fr_1fr]">
+              <div>
+                <p className="eyebrow eyebrow-light">Resource library</p>
+                <RevealHeading
+                  className="mt-5 font-display text-[2rem] font-semibold leading-[1.1] tracking-[-0.015em] sm:text-[2.6rem] lg:text-[3.1rem]"
+                  parts={['Every lecture deck and circular,', { text: 'in one place.', className: 'italic font-medium text-ph-gold-light' }]}
+                />
+                <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-white/70">
+                  Download presentations from national and regional conferences, and reference materials from COA, DBM,
+                  DILG and BIR.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3 lg:justify-end">
+                <Link href="/downloads" className="btn-gold group">
+                  Browse downloads
+                  <ArrowRight className="arrow-nudge h-4 w-4" />
+                </Link>
+                <Link href="/login" className="btn-outline-light">
+                  <LockKeyhole className="h-4 w-4" />
+                  Member login
+                </Link>
+              </div>
+            </div>
           </div>
-          <div className="flex gap-4 flex-wrap relative z-10">
-            <Link href="/downloads" className="btn-white">
-              📥 Browse Downloads
-            </Link>
-            <Link
-              href="/circulars"
-              className="inline-flex items-center gap-2 bg-transparent text-white/80 font-medium text-[15px] py-4 px-7 rounded-[10px] border-[1.5px] border-white/30 transition-all hover:border-ph-gold hover:text-ph-gold"
-            >
-              📋 View Circulars
-            </Link>
-          </div>
-        </div>
+        </BlurFade>
       </div>
     </section>
   )

@@ -1,74 +1,76 @@
 import Link from 'next/link'
-
-const events = [
-  {
-    day: '20',
-    month: 'ANC 2025',
-    title: '20th Annual National Conference',
-    meta: ['📍 Philippines', '🗓 2025'],
-    desc: "The landmark 20th edition of PhALGA's flagship national conference. Keynotes, technical sessions, and networking for LGU accountants nationwide.",
-    link: 'Download Materials →',
-    href: '/downloads',
-    gradient: 'from-ph-blue-dark to-ph-blue-light',
-  },
-  {
-    day: '17',
-    month: 'MINDANAO',
-    title: '17th Mindanao Geographical Conference',
-    meta: ['📍 Zamboanga City'],
-    desc: 'Topics covered EOPT, fiscal administration, gender planning, and budgeting for Mindanao LGUs.',
-    link: 'Get Lectures →',
-    href: '/downloads',
-    gradient: 'from-ph-red to-[#a50d1f]',
-  },
-  {
-    day: '17',
-    month: 'N. LUZON',
-    title: '17th Northern Luzon Geo Conference',
-    meta: ['📍 Northern Luzon'],
-    desc: 'Sessions covering RA 6713, RA 3019, barangay budgeting, and anti-corruption topics for northern LGUs.',
-    link: 'Get Lectures →',
-    href: '/downloads',
-    gradient: 'from-[#1a3a70] to-[#2c5ac0]',
-  },
-]
+import { ArrowRight, CalendarDays, MapPin } from 'lucide-react'
+import SectionHeading, { accent } from '@/components/SectionHeading'
+import { BlurFade } from '@/components/ui/blur-fade'
+import { eventSeries } from '@/lib/content'
 
 export default function EventsSection() {
+  // Most recent national conference, then the current round of regional ones
+  const national = eventSeries[0].events[0]
+  const regional = eventSeries[1].events
+  const rows = [{ ...national, series: 'National' }, ...regional.map((e) => ({ ...e, series: 'Geographical' }))]
+
   return (
-    <section id="events" className="py-24 bg-ph-white">
-      <div className="container-ph max-w-[1200px] mx-auto px-6 lg:px-10">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12">
-          <div>
-            <div className="section-label"><span>Upcoming & Recent</span></div>
-            <h2 className="section-title">Events & <span className="accent">Conferences</span></h2>
-          </div>
-          <Link href="/events" className="text-sm font-semibold text-ph-blue no-underline">
-            View all events →
-          </Link>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr] gap-6">
-          {events.map((e, i) => (
-            <article key={e.title} className="fade-up rounded-[18px] overflow-hidden border border-ph-border transition-all hover:-translate-y-1 hover:shadow-ph-lg">
-              <div className={`bg-gradient-to-br ${e.gradient} p-8 min-h-[180px] flex flex-col justify-end relative`}>
-                <div className="absolute top-6 right-6 bg-ph-gold rounded-[10px] px-3 py-2 text-center">
-                  <span className="font-display text-2xl font-black text-ph-blue-dark leading-none block">{e.day}</span>
-                  <span className="text-[11px] font-bold text-ph-blue-dark uppercase tracking-wide block">{e.month}</span>
-                </div>
-                <h3 className="font-display text-lg font-bold text-white leading-snug">{e.title}</h3>
-              </div>
-              <div className="bg-white p-6">
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {e.meta.map((m) => (
-                    <span key={m} className="text-xs text-ph-text-muted flex items-center gap-1">{m}</span>
-                  ))}
-                </div>
-                <p className="text-[13px] text-ph-text-muted leading-relaxed">{e.desc}</p>
-                <Link href={e.href} className="inline-flex items-center gap-1.5 mt-4 text-[13px] font-semibold text-ph-blue hover:gap-2.5 transition-all">
-                  {e.link}
+    <section id="events" className="py-24 lg:py-32">
+      <div className="container-site">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
+          <div className="lg:sticky lg:top-32 lg:self-start">
+            <SectionHeading
+              eyebrow="Conferences"
+              title={['Where members', accent('gather.')]}
+              lede="Each year PhALGA convenes a national conference and four regional Geographical Conferences, bringing regulators and practitioners into the same room."
+            />
+            <BlurFade delay={0.2}>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link href="/events" className="btn-primary group">
+                  View all events
+                  <ArrowRight className="arrow-nudge h-4 w-4" />
+                </Link>
+                <Link href="/downloads" className="btn-outline">
+                  Conference materials
                 </Link>
               </div>
-            </article>
-          ))}
+            </BlurFade>
+          </div>
+
+          <ol className="border-t border-ph-line">
+            {rows.map((e, i) => (
+              <BlurFade as="li" key={e.title} delay={i * 0.06} className="border-b border-ph-line">
+                <Link
+                  href={`/downloads?event=${encodeURIComponent(e.title)}`}
+                  className="group relative grid grid-cols-[64px_1fr_auto] items-center gap-5 py-7 sm:grid-cols-[88px_1fr_auto] sm:gap-8"
+                >
+                  {/* Hover wash that slides in from the left */}
+                  <span className="absolute inset-y-0 -left-4 -right-4 origin-left scale-x-0 rounded-2xl bg-white shadow-card transition-transform duration-500 ease-out group-hover:scale-x-100 sm:-left-6 sm:-right-6" />
+                  <span className="relative font-display text-[3rem] font-medium leading-none tracking-[-0.04em] text-ph-navy/15 transition-colors duration-500 group-hover:text-ph-gold sm:text-[3.75rem]">
+                    {e.edition}
+                  </span>
+                  <span className="relative min-w-0">
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ph-gold-deep">
+                      {e.series} · {e.badge}
+                    </span>
+                    <span className="mt-1.5 block font-display text-[19px] font-semibold leading-snug text-ph-ink sm:text-[21px]">
+                      {e.title}
+                    </span>
+                    <span className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-[13.5px] text-ph-muted">
+                      <span className="inline-flex items-center gap-1.5">
+                        <MapPin className="h-3.5 w-3.5" strokeWidth={1.8} />
+                        {e.location}
+                      </span>
+                      <span className="inline-flex items-center gap-1.5">
+                        <CalendarDays className="h-3.5 w-3.5" strokeWidth={1.8} />
+                        {e.date}
+                      </span>
+                    </span>
+                  </span>
+                  <span className="relative flex h-11 w-11 items-center justify-center rounded-full border border-ph-line text-ph-navy transition-all duration-500 group-hover:border-ph-navy group-hover:bg-ph-navy group-hover:text-white">
+                    <ArrowRight className="h-4 w-4 transition-transform duration-500 group-hover:-rotate-45" />
+                    <span className="sr-only">Materials</span>
+                  </span>
+                </Link>
+              </BlurFade>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

@@ -2,56 +2,19 @@
 
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
-import {
-  ArrowRightIcon,
-  EmptyState,
-  FilterToolbar,
-  GroupHeader,
-  Highlight,
-  slugify,
-} from './SubpageFilter'
-import '../app/downloads/downloads.css'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ArrowDown, ArrowRight, FileText, LockKeyhole, MessageSquareText } from 'lucide-react'
+import { EmptyState, FilterToolbar, GroupHeader, Highlight, slugify } from './SubpageFilter'
+import { BlurFade } from '@/components/ui/blur-fade'
+import type { DownloadCategory } from '@/lib/content'
 
-export type DownloadItem = {
-  title: string
-  description: string
-}
-
-export type DownloadCategory = {
-  title: string
-  shortTitle: string
-  kicker: string
-  description: string
-  items: DownloadItem[]
-}
-
-function DocIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-      <path d="M14 2v6h6" />
-      <path d="M9 13h6M9 17h4" />
-    </svg>
-  )
-}
-
-function ArrowDownIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M12 4v12" />
-      <path d="M6 13l6 6 6-6" />
-    </svg>
-  )
-}
+export type { DownloadCategory, DownloadItem } from '@/lib/content'
 
 export default function DownloadsBrowser({ categories }: { categories: DownloadCategory[] }) {
   const [query, setQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
 
-  const totalItems = useMemo(
-    () => categories.reduce((sum, category) => sum + category.items.length, 0),
-    [categories]
-  )
+  const totalItems = useMemo(() => categories.reduce((sum, category) => sum + category.items.length, 0), [categories])
 
   const visibleCategories = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -81,8 +44,9 @@ export default function DownloadsBrowser({ categories }: { categories: DownloadC
   }
 
   return (
-    <div className="pg-page">
+    <>
       <FilterToolbar
+        layoutKey="downloads"
         total={totalItems}
         visibleCount={visibleCount}
         isFiltered={isFiltered}
@@ -93,104 +57,110 @@ export default function DownloadsBrowser({ categories }: { categories: DownloadC
         onQueryChange={setQuery}
         searchPlaceholder="Search lectures, circulars, topics…"
         searchLabel="Search downloadable materials"
-        chips={categories.map((category) => ({
-          id: category.title,
-          label: category.shortTitle,
-          count: category.items.length,
-        }))}
+        chips={categories.map((c) => ({ id: c.title, label: c.shortTitle, count: c.items.length }))}
         activeChip={activeCategory}
         onChipToggle={(id) => setActiveCategory((current) => (!id || current === id ? null : id))}
         chipGroupLabel="Filter by collection"
       />
 
-      <div className="pg-body">
-        {visibleCategories.length === 0 ? (
-          <EmptyState
-            query={query}
-            onReset={resetFilters}
-            hint="Try a shorter keyword such as “COA”, “budgeting”, or “tax”."
-          />
-        ) : (
-          visibleCategories.map((category) => (
-            <section key={category.title} className="pg-group" aria-labelledby={`dl-${slugify(category.title)}`}>
-              <GroupHeader
-                id={`dl-${slugify(category.title)}`}
-                kicker={category.kicker}
-                title={category.title}
-                description={category.description}
-                query={query}
-              />
+      <div className="container-site py-16 lg:py-24">
+        <div className="space-y-16">
+          {visibleCategories.length === 0 ? (
+            <EmptyState query={query} onReset={resetFilters} hint="Try a shorter keyword such as “COA”, “budgeting”, or “tax”." />
+          ) : (
+            visibleCategories.map((category) => (
+              <section key={category.title} aria-labelledby={`dl-${slugify(category.title)}`}>
+                <BlurFade>
+                  <GroupHeader
+                    id={`dl-${slugify(category.title)}`}
+                    kicker={category.kicker}
+                    title={category.title}
+                    description={category.description}
+                    query={query}
+                    count={category.items.length}
+                  />
+                </BlurFade>
 
-              <div className="dl-grid">
-                {category.items.map((item) => (
-                  <article key={item.title} className="dl-card">
-                    <div className="dl-card-top">
-                      <span className="dl-icon">
-                        <DocIcon />
-                      </span>
-                      <h3 className="dl-card-title">
-                        <Highlight text={item.title} query={query} />
-                      </h3>
-                    </div>
-                    <p className="dl-card-desc">
-                      <Highlight text={item.description} query={query} />
-                    </p>
-                    <div className="dl-card-foot">
-                      <span className="dl-tag">{category.shortTitle}</span>
-                      <button type="button" className="dl-dl-btn" aria-label={`Download ${item.title}`}>
-                        Download
-                        <ArrowDownIcon />
-                      </button>
-                    </div>
-                  </article>
-                ))}
+                <motion.ul layout className="mt-6 grid gap-3 md:grid-cols-2">
+                  <AnimatePresence mode="popLayout">
+                    {category.items.map((item, i) => (
+                      <motion.li
+                        layout
+                        key={item.title}
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.97 }}
+                        transition={{ duration: 0.4, delay: i * 0.04, ease: [0.22, 1, 0.36, 1] }}
+                        className="group flex items-center gap-5 rounded-2xl border border-ph-line bg-white p-5 transition-all duration-300 hover:border-ph-navy/25 hover:shadow-card"
+                      >
+                        <span className="relative flex h-12 w-10 shrink-0 items-center justify-center rounded-md border border-ph-line bg-ph-paper text-ph-navy transition-colors duration-300 group-hover:border-ph-navy group-hover:bg-ph-navy group-hover:text-white">
+                          <FileText className="h-5 w-5" strokeWidth={1.5} />
+                          {/* folded corner */}
+                          <span className="absolute -right-px -top-px h-3 w-3 rounded-bl-[4px] border-b border-l border-ph-line bg-ph-mist transition-colors group-hover:border-ph-navy-soft group-hover:bg-ph-navy-soft" />
+                        </span>
+                        <div className="min-w-0 flex-1">
+                          <h3 className="text-[15px] font-semibold leading-snug text-ph-ink">
+                            <Highlight text={item.title} query={query} />
+                          </h3>
+                          <p className="mt-0.5 text-[13.5px] leading-relaxed text-ph-muted">
+                            <Highlight text={item.description} query={query} />
+                          </p>
+                        </div>
+                        <button
+                          type="button"
+                          aria-label={`Download ${item.title}`}
+                          className="group/dl relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-ph-line text-ph-navy transition-all duration-300 hover:border-ph-navy hover:bg-ph-navy hover:text-white sm:w-auto sm:gap-2 sm:px-4"
+                        >
+                          <span className="hidden text-[13px] font-semibold sm:inline">Download</span>
+                          <span className="relative h-4 w-4 overflow-hidden">
+                            <ArrowDown className="absolute inset-0 h-4 w-4 transition-transform duration-300 group-hover/dl:translate-y-4" />
+                            <ArrowDown className="absolute inset-0 h-4 w-4 -translate-y-4 transition-transform duration-300 group-hover/dl:translate-y-0" />
+                          </span>
+                        </button>
+                      </motion.li>
+                    ))}
+                  </AnimatePresence>
+                </motion.ul>
+              </section>
+            ))
+          )}
+        </div>
+
+        <div className="mt-20 grid gap-5 md:grid-cols-2">
+          {[
+            {
+              icon: LockKeyhole,
+              title: 'Member access',
+              text: 'Downloads are available to registered members. Some materials may require you to log in before the file becomes available.',
+              href: '/login',
+              link: 'Member login',
+            },
+            {
+              icon: MessageSquareText,
+              title: 'Can’t find a file?',
+              text: 'If you need a specific lecture, circular, or presentation that is not listed here, send us a request and we will follow up.',
+              href: '/contact',
+              link: 'Contact PhALGA',
+            },
+          ].map((note, i) => (
+            <BlurFade key={note.title} delay={i * 0.08}>
+              <div className="flex h-full gap-5 rounded-3xl bg-ph-mist p-7">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-ph-navy">
+                  <note.icon className="h-5 w-5" strokeWidth={1.6} />
+                </span>
+                <div>
+                  <h3 className="font-display text-[20px] font-semibold text-ph-ink">{note.title}</h3>
+                  <p className="mt-2 text-[14.5px] leading-relaxed text-ph-muted">{note.text}</p>
+                  <Link href={note.href} className="group mt-4 inline-flex items-center gap-1.5 text-[14px] font-semibold text-ph-navy">
+                    {note.link}
+                    <ArrowRight className="arrow-nudge h-4 w-4" />
+                  </Link>
+                </div>
               </div>
-            </section>
-          ))
-        )}
-
-        <div className="pg-notes">
-          <div className="pg-note">
-            <span className="pg-note-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <rect x="4" y="10" width="16" height="11" rx="2" />
-                <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-                <path d="M12 15v2" />
-              </svg>
-            </span>
-            <div className="pg-note-body">
-              <h3 className="pg-note-title">Member access</h3>
-              <p className="pg-note-text">
-                Downloads are available to registered members. Some materials may require you to log in before the file
-                becomes available.
-              </p>
-              <Link href="/login" className="pg-note-link">
-                Member login
-                <ArrowRightIcon />
-              </Link>
-            </div>
-          </div>
-
-          <div className="pg-note">
-            <span className="pg-note-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-              </svg>
-            </span>
-            <div className="pg-note-body">
-              <h3 className="pg-note-title">Can&rsquo;t find a file?</h3>
-              <p className="pg-note-text">
-                If you hit an access issue or need a specific lecture, circular, or presentation that is not listed here,
-                send us a request and we will follow up.
-              </p>
-              <Link href="/contact" className="pg-note-link">
-                Contact PhALGA
-                <ArrowRightIcon />
-              </Link>
-            </div>
-          </div>
+            </BlurFade>
+          ))}
         </div>
       </div>
-    </div>
+    </>
   )
 }
