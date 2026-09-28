@@ -51,7 +51,7 @@ export function groupFromNumber(num: number): OfficerGroup {
 const rosters: Record<string, Record<number, RosterEntry>> = {
   '2026-2027': {
     1: { name: 'DR. Nancy A. Torres, CPA', position: 'President', lgu: 'Municipal Accountant of Bacnotan, La Union', group: 'president' },
-    2: { name: 'Atty. Jose Neil D. Lumongsod, CPA', position: 'Executive Vice President', lgu: 'City Accountant,City of Bogo, Cebu', group: 'executive-vp' },
+    2: { name: 'Atty. Jose Neil D. Lumongsod, CPA', position: 'Executive Vice President', lgu: 'City Accountant, City of Bogo, Cebu', group: 'executive-vp' },
     3: { name: 'Lito F. Melegrito, CPA', position: 'Vice President for Northern Luzon', lgu: 'Municipal Accountant of Gerona, Tarlac', group: 'vice-presidents' },
     4: { name: 'Atty. Christine N. Meralpes, CPA', position: 'Vice President for Southern Luzon', lgu: 'City Accountant, City of Sorsogon', group: 'vice-presidents' },
     5: { name: 'Marie Jun O. Maturan, CPA', position: 'Vice President for Visayas', lgu: 'Municipal Accountant of Amlan, Negros Oriental', group: 'vice-presidents' },
