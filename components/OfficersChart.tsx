@@ -10,9 +10,11 @@ import { cn } from '@/lib/utils'
 
 const groups: { id: OfficerGroup; title: string; kicker: string }[] = [
   { id: 'president', title: 'National President', kicker: 'Leadership' },
-  { id: 'vice-presidents', title: 'Vice Presidents', kicker: 'Executive & regional' },
-  { id: 'secretariat', title: 'Executive Officers', kicker: 'Secretariat' },
+  { id: 'executive-vp', title: 'Executive Vice President', kicker: 'Executive' },
+  { id: 'vice-presidents', title: 'Vice Presidents', kicker: 'Regional' },
+  { id: 'secretariat', title: 'Secretary · Treasurer · Auditor · PRO', kicker: 'Secretariat' },
   { id: 'trustees', title: 'Board of Trustees', kicker: 'Governance' },
+  { id: 'immediate-past-president', title: 'Immediate Past President', kicker: 'Continuity' },
   { id: 'advisers', title: 'Council of Advisers', kicker: 'Counsel' },
 ]
 
@@ -56,7 +58,8 @@ export default function OfficersChart({ officers }: { officers: OfficerFromFile[
         {groups.map((g) => {
           const members = officers.filter((o) => o.group === g.id)
           if (members.length === 0) return null
-          const isLead = g.id === 'president'
+          const isLead =
+            g.id === 'president' || g.id === 'executive-vp' || g.id === 'immediate-past-president'
           return (
             <section key={g.id} aria-labelledby={`tier-${g.id}`}>
               <BlurFade className="mb-10 flex flex-col items-center text-center">

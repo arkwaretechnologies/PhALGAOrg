@@ -26,7 +26,7 @@ const stats = [
   { value: 20, suffix: '', label: 'Annual National Conferences held' },
   { value: 17, suffix: '', label: 'Editions of the regional Geographical Conferences' },
   { value: 4, suffix: '', label: 'Regional clusters, from Northern Luzon to Mindanao' },
-  { value: 22, suffix: '', label: 'National Officers leading the 2025–2026 term' },
+  { value: 22, suffix: '', label: 'National Officers leading the 2026–2027 term' },
 ]
 
 export default function AboutSection() {

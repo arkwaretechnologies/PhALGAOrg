@@ -129,7 +129,7 @@
     "id": "vicente-luis-d-marcos",
     "name": "VICENTE LUIS D. MARCOS, CPA",
     "fiscalYear": "FY 2019-2022",
-    "location": "Province of Aklan",
+    "location": "Malinao,Aklan",
     "image": "/past-presidents/vicente-luis-d-marcos.jpg",
     "socials": {},
     "sortOrder": 2019
@@ -142,5 +142,23 @@
     "image": "/past-presidents/narvin-b-lachica.jpg",
     "socials": {},
     "sortOrder": 2022
+  },
+  {
+    "id": "smith-o-valdez",
+    "name": "ATTY. SMITH O. VALDEZ, CPA",
+    "fiscalYear": "FY 2023-2024",
+    "location": "San Agustin, Isabela",
+    "image": "/past-presidents/smith-o-valdez.jpg",
+    "socials": {},
+    "sortOrder": 2023
+  },
+  {
+    "id": "alma-c-libo-on",
+    "name": "ALMA C. LIBO-ON, CPA",
+    "fiscalYear": "FY 2024-2025",
+    "location": "Pototan, Iloilo",
+    "image": "/past-presidents/alma-c-libo-on.jpg",
+    "socials": {},
+    "sortOrder": 2024
   }
 ]

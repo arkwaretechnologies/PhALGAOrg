@@ -12,7 +12,7 @@ export type NavItem = { href: string; label: string; description?: string }
 
 export const aboutLinks: NavItem[] = [
   { href: '/about', label: 'About PhALGA', description: 'Mission, vision, values and our founding story' },
-  { href: '/about/officers', label: 'National Officers', description: 'The 2025–2026 leadership' },
+  { href: '/about/officers', label: 'National Officers', description: 'The 2026–2027 leadership' },
   { href: '/about/past-presidents', label: 'Past Presidents', description: 'Two decades of national leadership' },
   { href: '/about/archives', label: 'Archives', description: 'Historical records and documents' },
 ]
